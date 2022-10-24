@@ -200,6 +200,7 @@ def nuevaTabla(): #Crea una nueva tabla "Monopatin", con más columnas que la ta
             color varchar(30),
             fechaUltimoPrecio datetime
             )""")
+        cursor.execute("""CREATE TABLE HistoricoPrecios AS SELECT * FROM Monopatin""")
         conn.commit()
     except:
         print("ERROR.")
@@ -222,7 +223,6 @@ def clonarTabla(): #Clona todas las columnas de la tabla "Monopatin" y crea una 
     try:
         conn = sql.connect("Monopatines.db")
         cursor = conn.cursor()
-        cursor.execute("""CREATE TABLE HistoricoPrecios AS SELECT * FROM Monopatin WHERE 0""")
         cursor.execute("""INSERT INTO HistoricoPrecios SELECT * FROM Monopatin""")
         conn.commit()
     except:
@@ -234,7 +234,7 @@ def actualizarDolar(): #Actualiza el precio incrementándolo en 0.23% del total 
     try:
         conn = sql.connect("Monopatines.db")
         cursor = conn.cursor()
-        instruccion = f"UPDATE HistoricoPrecios SET precio=precio*1.23"
+        instruccion = f"UPDATE Monopatin SET precio=precio*1.23"
         cursor.execute(instruccion)
         conn.commit()
     except:
